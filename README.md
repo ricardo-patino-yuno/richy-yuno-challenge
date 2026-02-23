@@ -375,12 +375,17 @@ The `data/` directory contains three reference files loaded at startup:
    bash demo.sh
    ```
 
-3. **Run the integration tests** (15 automated pass/fail checks):
+3. **Run the pytest suite** (129 unit + integration tests):
+   ```bash
+   pytest
+   ```
+
+4. **Run the bash integration tests** (15 automated pass/fail checks):
    ```bash
    bash test_integration.sh
    ```
 
-4. **Use the Swagger UI** for interactive exploration:
+5. **Use the Swagger UI** for interactive exploration:
    Open http://localhost:8000/docs in your browser.
 
 ---
@@ -390,6 +395,21 @@ The `data/` directory contains three reference files loaded at startup:
 - **Batch Screening**: `POST /api/screening/batch` accepts arrays of transactions and returns individual results plus aggregate statistics (counts per decision, top risk factors).
 - **Configurable Rules**: `GET/PUT /api/rules` allows modifying all thresholds at runtime -- amount limits, velocity windows, fuzzy match sensitivity, structuring parameters. Changes take effect immediately.
 - **Audit Trail**: `GET /api/audit` provides a full compliance audit log with filtering by transaction_id and time range. Each entry links the original request to the final decision, risk score, and matched rules.
+
+---
+
+## Documentation
+
+The [`docs/`](docs/README.md) directory contains the full documentation trail — from initial research through implementation:
+
+| Document | Description |
+|----------|-------------|
+| [Research](docs/01-research.md) | Deep analysis of the challenge spec |
+| [Plan Comparison](docs/02-plan-comparison.md) | Side-by-side comparison of 3 implementation approaches |
+| [Plan A: Python + FastAPI](docs/03-plan-a-python-fastapi.md) | Selected plan with detailed TODOs and agent strategy |
+| [Plan B: Go + Gin](docs/03-plan-b-go-gin.md) | Alternative plan |
+| [Plan C: TypeScript + Express](docs/03-plan-c-typescript-express.md) | Alternative plan |
+| [AI Session Report](docs/04-ai-session-report.md) | Full AI-assisted build process breakdown |
 
 ---
 
@@ -426,7 +446,26 @@ yuno-challenge/
 │   ├── high_risk_countries.json         # 10 high-risk ISO country codes
 │   ├── rules_config.json                # Default rule thresholds
 │   └── test_transactions.json           # 125 test transactions
-├── requirements.txt                     # Python dependencies
-├── test_integration.sh                  # 15 automated integration tests
-└── demo.sh                              # Interactive demo script
+├── tests/                                 # pytest test suite (129 tests)
+│   ├── conftest.py                        # Shared fixtures and helpers
+│   ├── test_api.py                        # Integration tests (FastAPI TestClient)
+│   ├── test_engine.py                     # Screening engine orchestrator tests
+│   ├── test_store.py                      # In-memory storage tests
+│   ├── test_scorer.py                     # Score aggregation tests
+│   ├── test_sanctions.py                  # Sanctions rule tests
+│   ├── test_country_risk.py               # Country risk rule tests
+│   ├── test_velocity.py                   # Velocity rule tests
+│   ├── test_amount.py                     # Amount rule tests
+│   └── test_structuring.py               # Structuring rule tests
+├── docs/                                  # Project documentation
+│   ├── README.md                          # Documentation index
+│   ├── 01-research.md                     # Challenge spec analysis
+│   ├── 02-plan-comparison.md              # Implementation plan comparison
+│   ├── 03-plan-a-python-fastapi.md        # Selected plan (Python + FastAPI)
+│   ├── 03-plan-b-go-gin.md               # Alternative plan (Go + Gin)
+│   ├── 03-plan-c-typescript-express.md    # Alternative plan (TypeScript + Express)
+│   └── 04-ai-session-report.md           # AI-assisted build process report
+├── requirements.txt                       # Python dependencies
+├── test_integration.sh                    # 15 automated integration tests
+└── demo.sh                                # Interactive demo script
 ```

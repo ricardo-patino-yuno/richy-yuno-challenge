@@ -13,7 +13,10 @@ pip install -r requirements.txt
 # Run server
 python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 
-# Run integration tests (15 tests)
+# Run pytest suite (129 tests)
+pytest
+
+# Run bash integration tests (15 tests)
 bash test_integration.sh
 
 # Run demo (12 scenarios)
@@ -36,6 +39,8 @@ bash demo.sh
 - `app/storage/memory.py` — In-memory store keyed by sender name
 - `app/routes/` — FastAPI routers (screening, transactions, rules, audit)
 - `data/` — JSON reference data (sanctions list, countries, rules config, test transactions)
+- `tests/` — pytest suite (129 tests across 8 files)
+- `docs/` — Project documentation (research, plans, comparison, AI session report)
 
 ## Decision Logic
 
